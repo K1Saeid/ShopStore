@@ -1,5 +1,6 @@
-<div class="shopweb--product--details--info scroll">
-        <div class="shopweb-product-detail-close" (click)="closeDetail()">
+<div class="overlay" (click)="closeDetail()"></div>
+<div class="shopweb--product--details--info scroll" >
+        <div class="shopweb-product-detail-close" (click)="closeDetail()" >
             <i class="fa fa-times" aria-hidden="true"></i>
         </div>
         <div class="shopweb-product-detail-image">
@@ -65,4 +66,4 @@
             <button class="btn-add-to-cart" *ngIf="!product.inStock">Notify Me</button>
         </div>
     </div>
-    <div class="overlay"></div>
+    

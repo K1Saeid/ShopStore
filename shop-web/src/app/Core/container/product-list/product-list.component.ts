@@ -46,23 +46,25 @@ export class ProductListComponent {
 
   selectedFilterRadioButton: string = 'All';  
 
-  
   onFilterChanged(value: string) {
+    console.log('Selected Filter:', value);
     this.selectedFilterRadioButton = value;
   }
+
   shouldShowProduct(prod: any): boolean {
     const matchesFilter =
       this.selectedFilterRadioButton === 'All' ||
       prod.inStock.toString() === this.selectedFilterRadioButton;
-
+    
     const matchesSearch =
       this.searchText === '' ||
       prod.name.toLowerCase().includes(this.searchText.toLowerCase());
 
     return matchesFilter && matchesSearch;
   }
-  onSelectProduct(product: Product) { // 👈 تابع جدید
-    this.selectedProduct = product;
-  }
+  openDetails(prod: any) {
+  this.selectedProduct = prod;
+  document.body.style.overflow = 'hidden';
+}
 
 }

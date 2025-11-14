@@ -1,10 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopStore.Models;
+using System.Text.Json;
 
 namespace ShopStore.Repositories;
 
-public class ProductRepository(ShopContext context) : IProductRepository
+public class ProductRepository(ShopContext context , IHttpContextAccessor httpContextAccessor) : IProductRepository
 {
+    private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+    private readonly ShopContext context = context;
+
+    public string? GetCurrentUserEmail()
+    {
+        var userJson = httpContextAccessor.HttpContext?.Session.GetString("User");
+        if (userJson == null) return null;
+        var user = JsonSerializer.Deserialize<User>(userJson);
+        return user?.Email;
+    }
+
     public async Task<List<Product>> GetAllAsync() =>
         await context.Products.AsNoTracking().ToListAsync();
 

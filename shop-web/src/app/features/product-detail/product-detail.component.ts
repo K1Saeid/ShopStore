@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../services/product.service';
 import { NgIf, NgForOf, NgStyle } from '@angular/common';
 import { ProductListComponent } from '../../Core/container/product-list/product-list.component';
+import { ActivatedRoute } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [NgIf, NgForOf, NgStyle], // ✅ ProductListComponent حذف شد
+  imports: [NgIf, NgForOf, NgStyle], 
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
@@ -18,11 +18,9 @@ export class ProductDetailComponent implements OnInit {
   colors: string[] = [];
   sizes: string[] = [];
   loading = true;
-
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
-    private router: Router
+    private productService: ProductService
   ) { }
 
   ngOnInit(): void {
@@ -33,12 +31,14 @@ export class ProductDetailComponent implements OnInit {
       this.loading = false;
       return;
     }
-
-    
   }
 
   closeDetail() {
     this.productListComp.selectedProduct = undefined;
+    document.body.style.overflow = 'auto';
   }
 
-}
+  }
+  
+
+

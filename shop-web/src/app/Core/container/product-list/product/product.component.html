@@ -22,8 +22,7 @@
     {{product.colors?.split(',').length}} Colors • Best Seller
   </div>
 
-  <div class="shopweb--product--in--stock"
-       [ngStyle]="{fontWeight: 'bold', color: product.inStock ? 'green' : 'red'}">
+  <div class="shopweb--product--in--stock" [ngStyle]="{fontWeight: 'bold', color: product.inStock ? 'green' : 'red'}">
     {{product.inStock ? 'Available in Stock' : 'Not available in stock'}}
   </div>
 </div>
