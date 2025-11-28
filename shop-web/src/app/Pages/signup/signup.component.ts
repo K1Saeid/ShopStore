@@ -22,7 +22,7 @@ export class SignupComponent {
     const user = {
       fullName: this.fullName,
       email: this.email,
-      passwordHash: this.password
+      password: this.password 
     };
 
     this.userService.signup(user).subscribe({

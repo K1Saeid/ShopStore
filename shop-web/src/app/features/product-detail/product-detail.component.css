@@ -1,113 +1,192 @@
-.overlay{
-    position: fixed; /* Sit on top of the page content */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.3); /* Black background with opacity */
-    z-index: 5; /* Specify a stack order in case you're using a different order for other elements */
-    cursor: pointer; /* Add a pointer on hover */
-     overflow:hidden !important;
+/* ---------- OVERLAY ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  z-index: 20;
+  cursor: pointer;
+  transition: opacity .3s ease;
 }
 
-
-.shopweb--product--details--info{
-    position: fixed;
-    z-index: 10;
-    background-color: white;
-    transition: 1s;
-    width: 480px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 10px 25px;
+/* ---------- DRAWER ---------- */
+.shopweb--product--details--info {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 480px;
+  height: 100vh;
+  background: #fff;
+  padding: 25px;
+  z-index: 1000;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+  border-radius: 16px 0 0 16px;
+  animation: slideIn .35s ease forwards;
+  overflow-y: auto;
 }
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ---------- CLOSE BUTTON ---------- */
 .shopweb-product-detail-close {
   text-align: right;
-  color: #28282B;
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+}
+
+.shopweb-product-detail-close i:hover {
+  color: #000;
+}
+
+/* ---------- IMAGE ---------- */
+.shopweb-product-detail-image img {
+  width: 100%;
+  max-height: 330px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* ---------- PRODUCT TITLE ---------- */
+.shopweb-product-detail-name h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+/* ---------- TAGS (gender, brand, category) ---------- */
+.shopweb-product-detail-gbc span {
+  background: #111;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-right: 8px;
+}
+
+/* ---------- PRICE BOX ---------- */
+.shopweb-product-detail-price {
+  margin-top: 20px;
+  background: #fff7cc;
+  border: 2px solid #ffd43b;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 15px;
+}
+.shopweb-product-detail-price span{
+  margin:0px 5px;
+  background: #fff7cc;
+  padding:5px 7px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+
+/* ---------- SIZE SELECTOR ---------- */
+.shopweb-product-detail-available-size {
+  padding: 10px 18px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: .25s;
+}
+
+.shopweb-product-detail-available-size:hover {
+  background: #eaeaea;
+}
+
+.shopweb-product-detail-available-size.active {
+  background: #111;
+  color: white;
+  border-color: #111;
+}
+
+/* ---------- COLOR SELECTOR ---------- */
+.color-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 12px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  transition: .25s;
+}
+
+.color-circle:hover {
+  transform: scale(1.1);
+}
+
+.color-circle.active {
+  border: 3px solid #111;
+  transform: scale(1.2);
+}
+
+/* ---------- DESCRIPTION ---------- */
+.shopweb-product-detail-desc {
+  margin-top: 35px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* ---------- QTY ---------- */
+.qty-box {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qty-box button {
+  width: 38px;
+  height: 38px;
+  background: #f0f0f0;
+  border: none;
   font-size: 20px;
-  font-weight: lighter;
-  padding: 5px 0px;
-  cursor: pointer; /* Add a pointer on hover */
-}
-.shopweb-product-detail-image{
-    width: 100%;
-    height: 320px;
-}
-.shopweb-product-detail{
-    padding: 10px 0px;
-}
-.shopweb-product-detail-gbc{
-    margin: 20px 0px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: .25s;
 }
 
-.shopweb-product-detail-gbc > span{
-    background-color: #36454F;
-    margin-left: 0px;
-    padding: 5px 20px;
-    font-size: 14px;
-    color: white;
+.qty-box button:hover {
+  background: #ddd;
 }
 
-.shopweb-product-detail-name{
-    margin: 20px auto;
-}
-.shopweb-product-detail-price{
-    font-size: 14px;
-    margin:30px 0px;
-    padding: 25px 10px;
-    background-color: #FCF55F;
-    border:#FFC000 2px solid;
-    border-radius: 5px;
-}
-.shopweb-product-detail-size{
-    margin: 30px 0px;
-}
-span{
-    padding: 5px 10px;
-    margin: 5px 5px;
-    border-radius: 5px;
-}
-.shopweb-product-detail-available-size{
-    margin: 0px 0px;
-    background-color: #28282B; 
-    color:white;
-    border-radius: 0px;
-    padding: 10px 15px;
-    font-size: 16px;
-}
-.shopweb-product-detail-available-color{
-    border-radius: 50%;
-    padding: 8px 18px;
-}
-.shopweb-product-detail-desc{
-    margin-top: 30px;
-    font-size: 14px;
-}
-.shopweb-product-detail-addtoCart{
-    margin: 20px 0px;
-}
-.btn-add-to-cart{
-    border: none;
-    background-color: #28282B;
-    padding: 10px 30px;
-    font-size: 20px;
-    color: #fff;
+.qty-box span {
+  font-size: 18px;
+  font-weight: 600;
+  width: 25px;
+  text-align: center;
 }
 
-.scroll {
-    overflow-y: scroll;
+/* ---------- ADD TO CART BUTTON ---------- */
+.btn-add-to-cart {
+  width: 100%;
+  margin-top: 25px;
+  background: #111;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .25s;
 }
-.scroll::-webkit-scrollbar {
-    width:10px;
+
+.btn-add-to-cart:hover {
+  background: #333;
 }
-.scroll::-webkit-scrollbar-track {
-    -webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3); 
-    border-radius:5px;
-}
+
+/* ---------- SCROLLBAR ---------- */
+.scroll::-webkit-scrollbar { width: 8px; }
 .scroll::-webkit-scrollbar-thumb {
-    border-radius:5px;
-    -webkit-box-shadow: inset 0 0 6px #28282B; 
+  background: #999;
+  border-radius: 20px;
 }

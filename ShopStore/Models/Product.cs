@@ -17,8 +17,6 @@ public class Product
 
     public string Gender { get; set; } = "UNISEX";
 
-    public string Category { get; set; } = "RUNNING";
-
     public string Sizes { get; set; } = string.Empty;   // "6,7,8,9,10"
     public string Colors { get; set; } = string.Empty;  // "White,Blue,Black"
 
@@ -34,5 +32,9 @@ public class Product
     public string ImageUrl { get; set; } = string.Empty;
 
     public string Slug { get; set; } = string.Empty;
+
+    // Foreign key to Category
+    public int CategoryId { get; set; }
+    public Category? Category { get; set; }
 }
 

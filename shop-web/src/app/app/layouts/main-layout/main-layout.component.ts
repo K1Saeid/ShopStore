@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../../Core/header/header.component';
-import { ContainerComponent } from '../../../Core/container/container.component';
+import { FooterComponent } from "../../../Core/footer/footer.component";
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl:'./main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })

@@ -18,10 +18,11 @@ public class ProductRepository(ShopContext context , IHttpContextAccessor httpCo
     }
 
     public async Task<List<Product>> GetAllAsync() =>
-        await context.Products.AsNoTracking().ToListAsync();
+        await context.Products.Include(p => p.Category).AsNoTracking().ToListAsync();
 
     public async Task<Product?> GetByIdAsync(int id) =>
-        await context.Products.FindAsync(id);
+        await context.Products.Include(p => p.Category) // ⭐ JOIN
+            .FirstOrDefaultAsync(p => p.Id == id);
 
     public async Task AddAsync(Product product)
     {

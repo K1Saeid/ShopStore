@@ -25,7 +25,7 @@ export class SigninComponent {
   onSubmit() {
     const user = {
       email: this.email,
-      passwordHash: this.password
+      password: this.password 
     };
 
     this.userService.signin(user).subscribe({

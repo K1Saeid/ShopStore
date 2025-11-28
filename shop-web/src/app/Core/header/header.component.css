@@ -42,9 +42,9 @@
 }
 
 .btn{
-    padding: 15px 25px;
+    padding: 10px 15px;
     border: none;
-    margin: 10px 0px;
+    margin: 0px 0px;
 }
 
 .btn-primary{
@@ -52,14 +52,66 @@
     color: white;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
+/* CART ICON BOX */
+/* کانتینر لینک */
+.cart-link {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  padding: 10px 30px;
-  background: #282828;
-  border-bottom: 1px solid #ddd;
-  z-index: 1000 ;
+  text-decoration: none;
+  color: #222;
+  transition: 0.3s ease;
+}
+
+/* آیکون سبد */
+.cart-icon {
+  font-size: 23px;
+  transition: 0.3s ease;
+}
+
+/* --- افکت Glow + تغییر رنگ + Shake --- */
+.cart-link:hover .cart-icon {
+  color: #ff3b3b; /* تغییر رنگ کامل */
+  text-shadow: 0 0 8px rgba(255, 60, 60, 0.9); /* Glow دور آیکون */
+  transform: scale(1.15) rotate(-3deg); /* کمی بزرگ + کمی زاویه دادن */
+}
+
+/* Badge هم حرفه‌ای‌تر می‌شود */
+.cart-badge {
+  background: #e60023;
+  transition: 0.3s ease;
+}
+
+.cart-link:hover .cart-badge {
+  background: #ff4d4d;
+  transform: scale(1.15);
+  box-shadow: 0 0 6px rgba(255, 60, 60, 0.9);
+}
+
+
+.cart-icon {
+  font-size: 22px;
+}
+
+/* BADGE */
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: #dc3545;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.cart-link:hover .cart-badge {
+  transform: scale(1.1);
+  transition: 0.25s ease;
+ 
 }
 
 .navbar-right {
@@ -111,7 +163,11 @@
   right: 0;
   display: none;
 }
+.dropdown .dropdown-menu{
+  right:17px !important;
+}
 
 .dropdown.open {
   display: block;
 }
+

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopStore.DTOs;
 using ShopStore.Models;
 using ShopStore.Repositories;
@@ -6,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace ShopStore.Controllers;
-[Route("api/[controller]")]
+[Route("api/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -16,27 +17,39 @@ public class AuthController : ControllerBase
     {
         _userRepository = userRepository;
     }
+   
     [HttpPost("signup")]
-    public async Task<IActionResult> Register([FromBody] User user)
+    public async Task<IActionResult> Register([FromBody] RegisterDto model)
     {
-        if (await _userRepository.GetByEmailAsync(user.Email) != null)
+        if (await _userRepository.GetByEmailAsync(model.Email) != null)
             return BadRequest("Email already exists");
 
-        // هش رمز قبل از ذخیره
-        user.PasswordHash = HashPassword(user.PasswordHash);
+        var user = new User
+        {
+            FullName = model.FullName,
+            Email = model.Email,
+            PasswordHash = HashPassword(model.Password),
+            Role = "Customer",
+            Status = "Active",
+            CreatedAt = DateTime.Now
+        };
+
         await _userRepository.AddUserAsync(user);
 
         return Ok(new { message = "User registered successfully" });
     }
 
+
     [HttpPost("signin")]
     public async Task<IActionResult> Login([FromBody] UserLoginDto login)
     {
         var user = await _userRepository.GetByEmailAsync(login.Email);
+        user.LastActivity = DateTime.Now;
         if (user == null)
             return Unauthorized("User not found");
 
-        if (user.PasswordHash != HashPassword(login.PasswordHash))
+        if (user.PasswordHash != HashPassword(login.Password))
+
             return Unauthorized("Invalid password");
 
         HttpContext.Session.SetString("User", System.Text.Json.JsonSerializer.Serialize(new
@@ -46,7 +59,7 @@ public class AuthController : ControllerBase
             user.Email
         }));
 
-        return Ok(new { user.FullName, user.Email });
+        return Ok(new { user.Id, user.FullName, user.Email });
     }
 
 
@@ -77,6 +90,61 @@ public class AuthController : ControllerBase
         var user = System.Text.Json.JsonSerializer.Deserialize<User>(userJson);
 
         return Ok(user);
+    }
+
+    // GET: api/auth/users
+
+    [HttpGet("users")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        var users = await _userRepository.GetAllUsersAsync();
+        return Ok(users);
+    }
+    [HttpGet("users/{id}")]
+    public async Task<IActionResult> GetUserById(int id)
+    {
+        var user = await _userRepository.GetUserByIdAsync(id);
+
+        if (user == null)
+            return NotFound();
+
+        return Ok(user);
+    }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, UserDto dto)
+    {
+        var user = await _userRepository.GetUserEntityByIdAsync(id);
+        if (user == null) return NotFound();
+
+        user.FullName = dto.FullName;
+        user.Email = dto.Email;
+        user.Phone = dto.Phone;
+        user.Role = dto.Role;
+        user.Status = dto.Status;
+
+        await _userRepository.UpdateAsync(user);
+
+        return Ok();
+    }
+    [HttpPut("block/{id}")]
+    public async Task<IActionResult> BlockUser(int id)
+    {
+        await _userRepository.BlockUserAsync(id);
+        return Ok(new { message = "User Blocked" });
+    }
+
+    [HttpPut("update-profile/{id}")]
+    public async Task<IActionResult> UpdateProfile(int id, UpdateUserDto dto)
+    {
+        var user = await _userRepository.GetUserEntityByIdAsync(id);
+        if (user == null)
+            return NotFound();
+
+        user.FullName = dto.FullName;
+        user.Phone = dto.Phone;
+
+        await _userRepository.UpdateAsync(user);
+        return Ok(new { message = "Profile updated successfully" });
     }
 
 }
